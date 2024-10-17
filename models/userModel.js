@@ -1,15 +1,21 @@
-// models/userModel.js
 import mongoose from 'mongoose';
 
+// Define the user schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   phone: {
     type: String,
@@ -19,11 +25,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password: {
+  role: {
     type: String,
-    required: true,
+    enum: ['user', 'admin'], // Restrict to 'user' or 'admin'
+    default: 'user',        // Set 'user' as the default role
   },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+});
 
+// Create the user model
 const userModel = mongoose.model('User', userSchema);
+
 export default userModel;
