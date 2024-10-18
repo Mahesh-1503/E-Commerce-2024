@@ -1,13 +1,163 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.footer {
+  background-color: #2d3748; /* Dark gray */
+  color: white;
+  padding: 20px 0; /* Add padding for better spacing */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column; /* Stack footer elements vertically */
+  align-items: center; /* Center align footer items */
+}
+
+.footer-logo h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem; /* Add space below the logo */
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column; /* Stack links vertically on mobile */
+  align-items: center; /* Center align links */
+  margin-bottom: 1rem; /* Add space below the links */
+}
+
+.footer-links a {
+  margin: 0.5rem 0; /* Add vertical spacing between links */
+  text-decoration: none;
+  color: white; /* Set link color */
+  transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover */
+  position: relative; /* For positioning the glowing effect */
+  overflow: hidden; /* Hide overflow for the pseudo-element effect */
+}
+
+/* Glowing effect for footer links */
+.footer-links a:hover {
+  color: #00bcd4; /* Change to a cool cyan on hover */
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.7), 0 0 20px rgba(0, 188, 212, 0.5); /* Glowing effect */
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center; /* Center align social icons */
+}
+
+.footer-social a {
+  margin: 0 10px;
+  color: white; /* Default icon color */
+  transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover */
+  position: relative; /* For positioning the glowing effect */
+}
+
+/* Glowing effect for social icons */
+.footer-social a:hover {
+  color: #00bcd4; /* Change to a cool cyan on hover */
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.7), 0 0 20px rgba(0, 188, 212, 0.5); /* Glowing effect */
+  transform: scale(1.1); /* Slightly scale up on hover */
+}
+
+/* Media query for responsiveness */
+@media (min-width: 768px) {
+  .footer-links {
+    flex-direction: row; /* Stack links horizontally on medium and larger screens */
+  }
+}
+
+/* New class for copyright text */
+.footer-copyright {
+  text-align: center; /* Center align the text */
+  margin-top: 20px; /* Add space above the copyright text */
+  font-size: 0.9rem; /* Adjust font size as needed */
+}
+
+/* Header Styles */
+.header {
+    background-color: #2d3748; /* Match Footer Background Color */
+    color: white; /* Text Color */
+    padding: 20px 0; /* Add padding for better spacing */
+}
+
+.header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between; /* Space between logo and nav items */
+    align-items: center; /* Center align items vertically */
+}
+
+/* Navigation Links */
+.nav-item {
+    margin: 0 10px; /* Space between nav items */
+    position: relative; /* For positioning the underline */
+}
+
+.nav-link {
+    text-decoration: none; /* Remove default underline */
+    color: white; /* Set link color */
+    padding: 10px 15px; /* Add padding for better click area */
+    border-radius: 5px; /* Rounded corners */
+    transition: color 0.3s; /* Smooth transition for color */
+}
+
+/* Underline effect */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0; /* Position it at the bottom of the link */
+    width: 0; /* Start with no width */
+    height: 2px; /* Thickness of the underline */
+    background-color: white; /* Color of the underline */
+    transition: width 0.3s ease, left 0.3s ease; /* Smooth transition for width and position */
+}
+
+/* Hover Effect for Navigation Links */
+.nav-link:hover {
+    color: #F5A623; /* Change text color on hover */
+}
+
+.nav-link:hover::after {
+    width: 100%; /* Expand the underline to full width on hover */
+    left: 0; /* Align it to the left */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-item {
+        margin: 10px 0; /* Space between nav items on smaller screens */
+    }
+
+    #navbar {
+        flex-direction: column; /* Stack links vertically on mobile */
+        align-items: center; /* Center align links */
+    }
+}
+
+/* Slide-in Animation for Header */
+#header {
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
