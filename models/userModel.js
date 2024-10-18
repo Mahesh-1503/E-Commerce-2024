@@ -4,26 +4,27 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
     trim: true,
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required'],
     unique: true,
     trim: true,
+    lowercase: true, // Ensure email is stored in lowercase for consistency
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'Password is required'],
   },
   phone: {
     type: String,
-    required: true,
+    required: [true, 'Phone number is required'],
   },
   address: {
     type: String,
-    required: true,
+    required: [true, 'Address is required'],
   },
   role: {
     type: String,
@@ -31,10 +32,10 @@ const userSchema = new mongoose.Schema({
     default: 'user',        // Set 'user' as the default role
   },
 }, {
-  timestamps: true,
+  timestamps: true, // Automatically manage createdAt and updatedAt timestamps
 });
 
-// Create the user model
+// Create and export the user model
 const userModel = mongoose.model('User', userSchema);
 
 export default userModel;

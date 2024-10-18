@@ -1,45 +1,59 @@
 import JWT from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 
-// Middleware to check if the user is authenticated
+// Middleware to protect routes based on token verification
 export const requireSignIn = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization;
+
+    // Check if token is provided
     if (!token) {
-      return res.status(401).send({
+      return res.status(401).json({
         success: false,
-        message: "Access denied. No token provided.",
+        message: 'Authorization token is required',
       });
     }
-    // Verify the token
+
+    // Verify the token and attach the decoded user data to the request
     const decoded = JWT.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Save the decoded user info in the request object
+    req.user = decoded;
     next();
   } catch (error) {
-    console.log(error);
-    res.status(401).send({
+    console.error('Error verifying token:', error);
+    return res.status(401).json({
       success: false,
-      message: "Invalid or expired token",
+      message: 'Invalid or expired token. Please login again.',
+      error,
     });
   }
 };
 
-// Middleware to check if the user is an admin
+// Middleware to allow access only to admin users
 export const isAdmin = async (req, res, next) => {
   try {
     const user = await userModel.findById(req.user._id);
-    if (user.role !== 1) {
-      return res.status(403).send({
+
+    // Check if user exists and has admin privileges
+    if (!user) {
+      return res.status(404).json({
         success: false,
-        message: "Access denied. Admin resources only.",
+        message: 'User not found',
       });
     }
+
+    if (user.role !== 1) {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Admin resources only.',
+      });
+    }
+
     next();
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
+    console.error('Error in admin middleware:', error);
+    return res.status(500).json({
       success: false,
-      message: "Error in admin middleware",
+      message: 'Internal server error while checking admin access',
       error,
     });
   }
