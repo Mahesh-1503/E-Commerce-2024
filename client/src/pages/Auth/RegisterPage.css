@@ -1,0 +1,52 @@
+.registration-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f8f9fa; /* Light background */
+  }
+  
+  .registration-form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limit width for better responsiveness */
+  }
+  
+  .registration-form-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .password-input {
+    position: relative; /* Needed for absolute positioning */
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #007bff; /* Bootstrap primary color */
+  }
+  
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it covers everything */
+  }
+  
+  .blurred {
+    filter: blur(3px);
+  }
+  

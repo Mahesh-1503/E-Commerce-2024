@@ -8,9 +8,9 @@ const Layout = ({ children, title, description, keywords}) => {
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keywords} />
+        <title>{title || 'Gadget Galaxy'}</title>
+        <meta name="description" content={description || 'Gadget Galaxy'} />
+        <meta name="keywords" content={keywords || 'Gadget Galaxy'} />
       </Helmet>
       <Header />
       <main className="flex-grow">

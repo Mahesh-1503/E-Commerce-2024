@@ -1,80 +1,58 @@
-// controllers/authController.js
-import userModel from '../models/userModel.js';
-import { hashPassword, comparePassword } from '../helpers/authHelper.js';
-import jwt from 'jsonwebtoken';
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-export const registerController = async (req, res) => {
+// Register new user
+const register = async (req, res) => {
+  const { name, email, password, phone, address } = req.body;
+
   try {
-    const { name, email, password, phone, address } = req.body;
-
-    // Validations
-    if (!name || !email || !password || !phone || !address) {
-      return res.status(400).send({ error: "All fields are required" });
-    }
-
-    // Check existing user
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send({ error: "User already exists" });
+      return res.status(400).json({ success: false, error: "User already exists" });
     }
 
-    // Hash password
-    const hashedPassword = await hashPassword(password);
-
-    // Save user
-    const user = new userModel({
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
       name,
       email,
+      password: hashedPassword,
       phone,
       address,
-      password: hashedPassword,
     });
-    await user.save();
 
-    res.status(201).send({ success: true, message: "User registered successfully" });
+    res.status(201).json({ success: true, message: "User registered successfully" });
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ success: false, message: "Error in registration", error });
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 };
 
-export const loginController = async (req, res) => {
+// Login user
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
-
-    // Validations
-    if (!email || !password) {
-      return res.status(400).send({ error: "Email and password are required" });
-    }
-
-    // Check user
-    const user = await userModel.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ error: "User not found" });
+      return res.status(400).json({ success: false, error: "Invalid email or password" });
     }
 
-    // Compare passwords
-    const isMatch = await comparePassword(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).send({ error: "Invalid credentials" });
+      return res.status(400).json({ success: false, error: "Invalid email or password" });
     }
 
-    // Create token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-
-    res.status(200).send({
-      success: true,
-      message: "Login successful",
-      user: { _id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address },
-      token,
-    });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    res.status(200).json({ success: true, token, message: "Login successful" });
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ success: false, message: "Error in login", error });
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 };
 
-// Example protected route controller
-export const testController = (req, res) => {
-  res.send("Protected route accessed!");
+const loginController = () => {
+  // controller logic
 };
+
+export default loginController;
+
+module.exports = { register, login };

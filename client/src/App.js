@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import {Routes,Route} from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
