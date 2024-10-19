@@ -29,9 +29,9 @@ const About = () => {
               { icon: <FaHandsHelping className="text-4xl text-teal-600 cursor-pointer hover:scale-110 transition-transform duration-300" />, text: "Supportive Team" },
               { icon: <FaCog className="text-4xl text-gray-600 cursor-pointer hover:scale-110 transition-transform duration-300" />, text: "Custom Solutions" },
             ].map((item, index) => (
-              <div key={index} className="flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div key={index} className="relative flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 {item.icon}
-                <span className="text-md ml-4 text-gray-800">{item.text}</span>
+                <span className="text-md ml-4 text-gray-800 relative z-10">{item.text}</span>
               </div>
             ))}
           </div>
