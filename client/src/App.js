@@ -1,28 +1,28 @@
-import React from "react";
-import Layout from "./components/Layouts/Layout";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage"; // Correct path
-import Category from "./pages/Category"; // Correct path
-import Register from "./pages/Register"; // Correct path
-import Login from "./pages/Login"; // Correct path
-import Cart from "./pages/Cart"; // Correct path
-import PageNotFound from "./pages/Pagenotfound"; // Correct path
-
+import React from 'react'
+import {Routes,Route} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Policy from "./pages/Policy";
+import NotFound from "./pages/Pagenotfound";
+import LoginPage from './pages/Auth/LoginPage';
+import RegisterPage from './pages/Auth/RegisterPage';
+import ForgotPassword from './pages/Auth/ForgotPassword';
 const App = () => {
   return (
-    <Router>
-      <Layout>
+    <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/about' element={<About/>}/>
+        <Route path='/contact' element={<Contact/>}/>
+        <Route path='/policy' element={<Policy/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
-      </Layout>
-    </Router>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App

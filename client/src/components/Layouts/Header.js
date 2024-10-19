@@ -1,93 +1,121 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-// Import unique icons from Heroicons
-import { HomeIcon, UserPlusIcon, UserIcon, TagIcon } from '@heroicons/react/24/outline';
-// Import GiShoppingBag from react-icons
-import { GiShoppingBag } from 'react-icons/gi';
-import '../../index.css';
-
+import {
+  FaHome,
+  FaUserPlus,
+  FaSignInAlt,
+  FaShoppingCart,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
+import "../Header.css";
+import { GiShoppingBag } from "react-icons/gi";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
-  useEffect(() => {
-    const header = document.getElementById('header');
-    header.classList.add('slide-in');
-  }, []);
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
   return (
-    <header id="header" className="header">
-      <nav className="container mx-auto flex justify-between items-center p-4">
-        <Link to="/" className="flex items-center">
-          <GiShoppingBag className="h-10 w-10 text-white mr-2" />
-          <span className="text-2xl font-bold text-white">Ecommerce App</span>
-        </Link>
-
-        <button
-          className="md:hidden p-2 text-white"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-controls="navbar"
-          aria-expanded={isOpen}
-        >
-          <span className="text-white">☰</span>
-        </button>
-
-        <div className={`md:flex ${isOpen ? "block" : "hidden"} transition-all duration-300 ease-in-out`} id="navbar">
-          <ul className="flex flex-col md:flex-row md:items-center md:space-x-4">
-            <li className="nav-item">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `nav-link p-2 rounded transition-transform transform ${isActive ? "active" : ""}`
-                }
-              >
-                <HomeIcon className="h-5 w-5 inline-block mr-1" /> Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/category"
-                className={({ isActive }) =>
-                  `nav-link p-2 rounded transition-transform transform ${isActive ? "active" : ""}`
-                }
-              >
-                <TagIcon className="h-5 w-5 inline-block mr-1" /> Category
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  `nav-link p-2 rounded transition-transform transform ${isActive ? "active" : ""}`
-                }
-              >
-                <UserPlusIcon className="h-5 w-5 inline-block mr-1" /> Register
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  `nav-link p-2 rounded transition-transform transform ${isActive ? "active" : ""}`
-                }
-              >
-                <UserIcon className="h-5 w-5 inline-block mr-1" /> Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  `nav-link p-2 rounded transition-transform transform ${isActive ? "active" : ""}`
-                }
-              >
-                <GiShoppingBag className="h-5 w-5 inline-block mr-1" /> Cart (0)
-              </NavLink>
-            </li>
-          </ul>
+    <nav className="bg-gray-800 text-white shadow-lg m-0">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <Link to="/" className="flex items-center">
+            <GiShoppingBag className="mr-2 text-4xl text-white" />
+            <span className="text-3xl font-bold text-white">Gadget Galaxy</span>
+          </Link>
+          <div className="hidden md:flex space-x-10 items-center ml-auto">
+            <NavLink
+              to="/"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+              end
+            >
+              <FaHome className="inline-block mr-2 text-3xl" />
+              Home
+            </NavLink>
+            <NavLink
+              to="/register"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+            >
+              <FaUserPlus className="inline-block mr-2 text-3xl" />
+              Register
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+            >
+              <FaSignInAlt className="inline-block mr-2 text-3xl" />
+              Login
+            </NavLink>
+            <Link
+              to="/cart"
+              className="cart-link nav-link text-white no-underline transition duration-300"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <span className="cart-text" style={{ marginRight: "0.5rem" }}>
+                Cart
+              </span>
+              <FaShoppingCart
+                className="cart-icon"
+                style={{ marginRight: "0.5rem", fontSize: "1.5rem" }}
+              />
+              <span className="item-count" style={{ fontSize: "1.5rem" }}>
+                (0)
+              </span>
+            </Link>
+          </div>
+          <button
+            className="md:hidden focus:outline-none"
+            onClick={handleNavCollapse}
+            aria-label="Toggle navigation"
+          >
+            {isNavCollapsed ? (
+              <FaBars className="text-3xl" />
+            ) : (
+              <FaTimes className="text-3xl" />
+            )}
+          </button>
         </div>
-      </nav>
-    </header>
+        <div
+          className={`${
+            isNavCollapsed ? "hidden" : "block"
+          } md:hidden pb-4 transition-all duration-300 ease-in-out`}
+        >
+          <div className="flex flex-col space-y-2">
+            <NavLink
+              to="/"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+              end
+            >
+              <FaHome className="inline-block mr-2 text-3xl" />
+              Home
+            </NavLink>
+            <NavLink
+              to="/register"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+            >
+              <FaUserPlus className="inline-block mr-2 text-3xl" />
+              Register
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="nav-link text-3xl text-white no-underline transition duration-300"
+            >
+              <FaSignInAlt className="inline-block mr-2 text-3xl" />
+              Login
+            </NavLink>
+            <Link
+              to="/cart"
+              className="cart-link flex items-center nav-link text-white no-underline transition duration-300"
+            >
+              <span className="cart-text">Cart</span>
+              <FaShoppingCart className="cart-icon text-3xl ml-2" />
+              <span className="item-count text-2xl ml-2">(0)</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 };
 
