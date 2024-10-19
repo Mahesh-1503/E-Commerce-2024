@@ -1,0 +1,57 @@
+/* LoginPage.css */
+.login-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+    padding: 20px;
+  }
+  
+  .login-form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    width: 100%;
+    max-width: 400px; /* Limit the width for better appearance */
+    transition: transform 0.2s ease; /* Smooth scaling */
+  }
+  
+  .login-form-container:hover {
+    transform: scale(1.02); /* Slight scaling effect on hover */
+  }
+  
+  h2 {
+    color: #333;
+    font-weight: 600; /* Bold heading */
+  }
+  
+  .form-input {
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ced4da; /* Border color */
+    transition: border-color 0.3s; /* Smooth border transition */
+  }
+  
+  .form-input:focus {
+    border-color: #6a11cb; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5); /* Soft glow effect */
+  }
+  
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it covers everything */
+  }
+  
+  .blurred {
+    filter: blur(4px); /* Blur effect on background when loading */
+  }
+  
